@@ -5,14 +5,18 @@
   <description>The racecar_wk3 package</description>
 
   <maintainer email="adithyabsk@gmail.com">Adithya Balaji</maintainer>
-
+  <maintainer email="czhao39@gmail.com">Charles Zhao</maintainer>
+  <maintainer email="todo@todo.com">Braden Oh</maintainer>
+  <maintainer email="todo@todo.com">David Song</maintainer>
+  <maintainer email="todo@todo.com">Garrett Creiger</maintainer>
 
   <license>MIT</license>
 
   <author email="todo@todo.com">Braden Oh</author>
-  <author email="todo@todo.com">Charles Zhao</author>
-  <author email="todo@todo.com">Garret Greiger</author>
+  <author email="czhao39@gmail.com">Charles Zhao</author>
+  <author email="todo@todo.com">Garrett Creiger</author>
   <author email="todo@todo.com">David Song</author> 
+  <author email="adithyabsk@gmail.com">Adithya Balaji</author>
   
   <buildtool_depend>catkin</buildtool_depend>
 
