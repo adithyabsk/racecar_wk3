@@ -41,14 +41,14 @@ class ObjectDetector:
             #if width > .005:  # if width of object larger than 1 cm
             if count_object > 15:
                 widths.append(count_object / 4)
-                angles.append((i + count_objects/2) / 4)
+                angles.append((i + count_object/2) / 4)
                 dists.append(min_object)
         if widths:  # only publish if objects detected
             detections = ObjectDetections()
             detections.widths = widths  # in degrees
             detections.angles = angles  # in degrees
             detections.dists = dists
-            object_pub.publish(detections)
+            self.object_pub.publish(detections)
 
 
 if __name__ == "__main__":

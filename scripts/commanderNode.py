@@ -43,7 +43,7 @@ cody = commander()
 
 def callBack(msg):
 
-    cody.wall_follow(object_msg)
+    cody.wall_follow(msg)
 
 
 # MAIN()      
