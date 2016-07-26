@@ -30,8 +30,8 @@ class ObjectDetector:
                     #width = count_close / 1080 * 3/2 * math.pi * avg_r  # arc length
                     #if width > .005:  # if width of object larger than 1 cm
                     if count_object > 15:  # detected an actual object
-                        widths.append(count_object / 4)
-                        angles.append((i + count_object/2) / 4)
+                        lefts.append((i-count_far-count_object) / 4)
+                        rights.append((i-count_far) / 4)
                         dists.append(min_object)
                     running_sum = 0
                     count_object = 0
@@ -40,13 +40,13 @@ class ObjectDetector:
             #width = count_close / 1080 * 3/2 * math.pi * avg_r  # arc length
             #if width > .005:  # if width of object larger than 1 cm
             if count_object > 15:
-                widths.append(count_object / 4)
-                angles.append((i + count_object/2) / 4)
+                lefts.append((1080-count_far-count_object) / 4)
+                rights.append(1080 / 4)
                 dists.append(min_object)
         if widths:  # only publish if objects detected
             detections = ObjectDetections()
-            detections.widths = widths  # in degrees
-            detections.angles = angles  # in degrees
+            detections.lefts = lefts  # in degrees
+            detections.rights = rights  # in degrees
             detections.dists = dists
             self.object_pub.publish(detections)
 

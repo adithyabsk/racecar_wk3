@@ -36,7 +36,7 @@ NODE_NAME = 'commander'
 
 #D_DESIRED = 0.8
 
-cody = commander()
+cody = Commander()
 
 def callback(msg):
     cody.wall_follow(msg)
