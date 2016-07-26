@@ -49,7 +49,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  blob_detection.msg
+  BlobDetections.msg
+  ObjectDetections.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -108,7 +109,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES racecar_wk3
 #  DEPENDS system_lib
-  CATKIN_DEPENDS ackermann_msgs rospy std_msgs message_runtime
+  CATKIN_DEPENDS ackermann_msgs std_msgs message_runtime
 )
 
 ###########
@@ -153,10 +154,10 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-install(PROGRAMS
-  scripts/colorDetector.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(PROGRAMS
+#  scripts/colorDetector.py
+#  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS racecar_wk3 racecar_wk3_node
