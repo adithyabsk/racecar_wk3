@@ -65,13 +65,13 @@ class commander:
 
 
 
-    # Function: PIDWallFollow
+    # Function: wall_follow
     # Parameters: msg (ObjectDetection)
     #
     # This function uses a PID control system
     # to let the car follow a line
 
-    def PIDWallFollow(self, msg):
+    def wall_follow(self, msg):
 
         if self.wall_right:
             start_angle = 20
