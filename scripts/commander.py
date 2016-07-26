@@ -33,7 +33,7 @@ class commander:
         self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
         # Add any other topic variables here
 
-        self.SPEED = 3.0
+        self.SPEED = 0.5
         # Add any other class constants here
 
         self.prev_error = 0
@@ -44,8 +44,8 @@ class commander:
         self.WALL_KD = .02
         self.wall_prev_error = 0
         self.wall_prev_time = time.clock()
-        self.WALL_DDES = 0.6
-        self.wall_right = True  # which wall to follow
+        self.WALL_DDES = 0.4
+        self.wall_right = False  # which wall to follow
 
 
     # Function: drive
@@ -79,7 +79,7 @@ class commander:
             mult = 1
         else:
             start_angle = 145
-            end_ind = 250
+            end_angle = 250
             mult = -1
         
         try:
@@ -98,7 +98,7 @@ class commander:
         
         if abs(error) > THRESHOLD: 
             # PUBLISH DRIVE COMMAND
-            self.drive(mult * calc_pid(self.WALL_KP, self.WALL_KD, self.WALL_KI, error, self.prev_error, self.prev_time))    # Execute drive function
+            self.drive(mult * self.calc_pid(self.WALL_KP, self.WALL_KD, self.WALL_KI, error, self.prev_error, self.prev_time))    # Execute drive function
         else:
             self.drive(0)
         
