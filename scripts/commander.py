@@ -38,7 +38,14 @@ class commander:
 
         self.prev_error = 0
         # Add any other class variables here
-    
+   
+        self.WALL_KP = .9
+        self.WALL_KI = .3
+        self.WALL_KD = .02
+        self.wall_prev_error = 0
+        self.wall_prev_time = time.clock()
+        self.WALL_DDES = 0.6
+        self.wall_right = True  # which wall to follow
 
 
     # Function: drive
@@ -66,22 +73,39 @@ class commander:
 
     def PIDWallFollow(self, msg):
 
-        distance = min(msg.dists)       # Finds the minimum range
-        steering_angle = 0              # Initializes steering_angle
+        if self.wall_right:
+            start_angle = 20
+            end_angle = 125
+            mult = 1
+        else:
+            start_angle = 145
+            end_ind = 250
+            mult = -1
+        
+        try:
+            min_ind = min([i for i in range(len(msg.dists)) if (start_angle < (msg.angles[i]-msg.widths[i]) and (msg.angles[i]-msg.widths[i] < end_angle)) or (start_angle < (msg.angles[i]+msg.widths[i]) and (msg.angles[i]+msg.widths[i]) < end_angle)], key=lambda x: msg.dists[x])
+        except ValueError:  # no wall detected
+            rospy.loginfo("no wall detected")
+            self.drive(0)
+            return
 
+        dist = msg.dists[min_ind]       # Finds the minimum range
+
+        error = self.WALL_DDES - dist
+        
         # SET PID PARAMETERS
         THRESHOLD = 0.05                # Sets threshold to 5cm
-        Kp = 0.2
-        Kd = 0.1
-        Ki = 0.1
-
-        # CALCULATE STEERING ANGLE
-        e_deriv = (error - self.prev_error) / (time.clock() - self.prev_time)
-        e_int = (error + self.prev_error)/2 * (time.clock() - self.prev_time)
+        
+        if abs(error) > THRESHOLD: 
+            # PUBLISH DRIVE COMMAND
+            self.drive(mult * calc_pid(self.WALL_KP, self.WALL_KD, self.WALL_KI, error, self.prev_error, self.prev_time))    # Execute drive function
+        else:
+            self.drive(0)
+        
         self.prev_error = error
         self.prev_time = time.clock()
 
-
-        # PUBLISH DRIVE COMMAND
-        self.drive(Kp*error + Kd*e_deriv + Ki*e_int)    # Execute drive function
-
+    def calc_pid(self, KP, KD, KI, error, prev_error, prev_time):
+        e_deriv = (error - prev_error) / (time.clock() - prev_time)
+        e_int = (error + prev_error) / 2 * (time.clock() - prev_time)
+        return KP*error + KD*e_deriv + KI*e_int
