@@ -27,7 +27,7 @@ from racecar_wk3.msg import ObjectDetections
 
 # CLASS DECLARATION
 
-class commander:
+class Commander:
 
     def __init__(self):
         self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
