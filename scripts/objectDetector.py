@@ -12,8 +12,8 @@ class ObjectDetector:
         self.scan_sub = rospy.Subscriber("scan", LaserScan, self.scan_cb)
     
     def scan_cb(self, msg):
-        widths = []
-        angles = []
+        lefts = []
+        rights = []
         dists = []
         running_sum = count_object = count_far = 0
         min_object = 100000  # closest point of object
@@ -43,7 +43,7 @@ class ObjectDetector:
                 lefts.append((1080-count_far-count_object) / 4)
                 rights.append(1080 / 4)
                 dists.append(min_object)
-        if widths:  # only publish if objects detected
+        if dists:  # only publish if objects detected
             detections = ObjectDetections()
             detections.lefts = lefts  # in degrees
             detections.rights = rights  # in degrees

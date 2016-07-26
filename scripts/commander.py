@@ -70,8 +70,9 @@ class Commander:
         self.DrivePub.publish(msg)              # Publishes the message
 
     def evade_objects(self, msg):
-        objs = [d[1] for d in enumerate(msg.dists)].sort()  # dists in order of distance
-        if len(objs) > 2:
+        objs = [d[1] for d in enumerate(msg.dists)]  # dists in order of distance
+        objs.sort()
+	if len(objs) > 2:
             thresh_dist = objs[2]
         else:
             thresh_dist = objs[len(objs)-1]
@@ -87,9 +88,9 @@ class Commander:
             rospy.loginfo("no space, we're doomed")
         else:
             error = max_center - 135
-            if abs(error) > THRESHOLD: 
+            if abs(error) > 2: 
                 # PUBLISH DRIVE COMMAND
-                self.drive(mult * self.calc_pid(self.OBJ_KP, self.OBJ_KD, self.OBJ_KI, error, self.obj_prev_error, self.obj_prev_time))    # Execute drive function
+                self.drive(self.calc_pid(self.OBJ_KP, self.OBJ_KD, self.OBJ_KI, error, self.obj_prev_error, self.obj_prev_time))    # Execute drive function
             else:
                 self.drive(0)
         self.obj_prev_error = error

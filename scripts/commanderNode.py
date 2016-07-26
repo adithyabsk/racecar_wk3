@@ -16,7 +16,7 @@ the advanced computations required by the RACECAR
 import rospy
 import math
 
-from commander import commander
+from commander import Commander
 
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
@@ -39,7 +39,7 @@ NODE_NAME = 'commander'
 cody = Commander()
 
 def callback(msg):
-    cody.wall_follow(msg)
+    cody.evade_objects(msg)
 
 # MAIN()      
 
