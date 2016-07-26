@@ -12,7 +12,7 @@ class SafetyController:
 
     def objects_cb(self, msg):
         for o in range(len(msg.dists)):
-            if msg.dists[o] < .5 and 120 > msg.angles[o] and msg.angles[o] < 150:
+            if msg.dists[o] < .5 and 120 < msg.angles[o] and msg.angles[o] < 150:
                 stop = AckermannDriveStamped()
                 stop.header.stamp = rospy.Time.now()
                 stop.drive.speed = -1
