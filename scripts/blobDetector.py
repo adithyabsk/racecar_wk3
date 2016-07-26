@@ -7,7 +7,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 from std_msgs.msg import Float64, Header, ColorRGBA
 from geometry_msgs.msg import Point
-from racecar_wk3.msg import blob_detection
+from racecar_wk3.msg import BlobDetections
 import RacecarUtilities
 import sys
 
@@ -40,7 +40,7 @@ class BlobDetector:
             self.is_tuning = False
         self.bridge = CvBridge()
         self.image_sub = rospy.Subscriber('/camera/rgb/image_rect_color', Image, self.image_callback)
-        self.info_pub = rospy.Publisher('target_info', blob_detection, queue_size=1)
+        self.info_pub = rospy.Publisher('/blobs', BlobDetections, queue_size=1)
 
     def image_callback(self, image_msg):
         self.image = self.bridge.imgmsg_to_cv2(image_msg, desired_encoding='bgr8')
@@ -67,21 +67,29 @@ class BlobDetector:
                 rect = cv2.minAreaRect(contour)
                 box = cv2.cv.BoxPoints(rect)
                 box = np.int0(box)
-                print box
+                #print box
+		detectedHeight = box[0][1]-box[1][1]
+
                 msg_header = Header()
                 msg_header.stamp = rospy.Time.now()
                 c = self.find_center(contour)
                 pos = Point(x=c[0], y=c[1], z=0.0)
-                color = ""
+                detectedColor = "NONE"
                 r = self.image[c[1], c[0], 2]
                 g = self.image[c[1], c[0], 1]
                 b = self.image[c[1], c[0], 0]
-                #if 
-                #blob_message = blob_detection(header=msg_header,
-                                              #color=color,
-                                              #height=,
-                                              #location=pos)
-                #self.info_pub.publish(blob_message)
+		print "RED: "+str(r)
+		print "GREEN: "+str(g)
+		if (r > g):
+			detectedColor = "RED"
+		else:
+			print "entered"
+			detectedColor = "GREEN"
+                blob_message = BlobDetections(header=msg_header,
+                                              color=detectedColor,
+                                              height=detectedHeight,
+                                              location=pos)
+                self.info_pub.publish(blob_message)
                 if self.is_tuning:
                     cv2.drawContours(self.image, [box], 0, (255, 0, 0), 5)
                     cv2.circle(self.image, self.find_center(contour), 8, (255, 0, 0), thickness=5)
