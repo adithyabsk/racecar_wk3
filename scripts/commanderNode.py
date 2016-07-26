@@ -38,11 +38,14 @@ NODE_NAME = 'commander'
 
 cody = commander()
 
+def callback(msg):
+    cody.wall_follow(msg)
+
 # MAIN()      
 
 rospy.init_node(NODE_NAME)
 
-object_sub = rospy.Subscriber(OBJECT_TOPIC, ObjectDetections, cody.wall_follow)
+object_sub = rospy.Subscriber(OBJECT_TOPIC, ObjectDetections, callback)
 #blob_msg = rospy.Subscriber(BLOB_TOPIC, BlobDetections, callBack)
 #map_msg = rospy.Subscriber(MAP_TOPIC, MapDetections, callBack)
 
