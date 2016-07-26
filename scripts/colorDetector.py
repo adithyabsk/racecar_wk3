@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import threading
+
 import rospy
 from sensor_msgs.msg import Image
 import cv2
@@ -12,7 +12,7 @@ import RacecarUtilities
 import sys
 
 
-class blob_detector:
+class BlobDetector:
     def __init__(self):
         # Trackbar creation
         def nothing(x):
@@ -107,7 +107,8 @@ class blob_detector:
         self.vu = cv2.getTrackbarPos('VU', 'HSV')
 
 
-rospy.init_node('color_detection_node')
-node = blob_detector()
-rospy.spin()
-cv2.destroyAllWindows()
+if __name__ == "__main__":
+    rospy.init_node('color_detection_node')
+    node = BlobDetector()
+    rospy.spin()
+    cv2.destroyAllWindows()
