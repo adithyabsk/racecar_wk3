@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
-commander.py
+commander(git).py
 
 MIT RACECAR 2016
 
-This class will act as a commanding node that reads
+™™This class will act as a commanding node that reads
 (processed) message data from accompanying nodes, makes
 decisions on how to proceed, then publishes drive commands
 directly to the /navigation topic.
@@ -17,9 +17,12 @@ directly to the /navigation topic.
 import rospy
 import math
 import time
+
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
 
+from racecar_wk3.msg import BlobDetections
+from racecar_wk3.msg import ObjectDetections
 
 
 # CLASS DECLARATION
@@ -55,13 +58,13 @@ class commander:
 
 
 
-    # Function: PDWallFollow
-    # Parameters: msg
+    # Function: PIDWallFollow
+    # Parameters: msg (ObjectDetection)
     #
     # This function uses a PID control system
     # to let the car follow a line
 
-    def PIDWallFollow(self, msg, speed, side):
+    def PIDWallFollow(self, msg):
 
         distance = min(msg.dists)       # Finds the minimum range
         steering_angle = 0              # Initializes steering_angle
