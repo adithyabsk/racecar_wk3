@@ -4,7 +4,7 @@ commander(git).py
 
 MIT RACECAR 2016
 
-™™This class will act as a commanding node that reads
+This class will act as a commanding node that reads
 (processed) message data from accompanying nodes, makes
 decisions on how to proceed, then publishes drive commands
 directly to the /navigation topic.
