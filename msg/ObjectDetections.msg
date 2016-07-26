@@ -1,4 +1,4 @@
 Header header
-float32[] angles
+float32[] lefts
+float32[] rights
 float32[] dists 
-float32[] widths
