@@ -67,15 +67,21 @@ class BlobDetector:
                 rect = cv2.minAreaRect(contour)
                 box = cv2.cv.BoxPoints(rect)
                 box = np.int0(box)
+                print box
                 msg_header = Header()
                 msg_header.stamp = rospy.Time.now()
                 c = self.find_center(contour)
                 pos = Point(x=c[0], y=c[1], z=0.0)
-                blob_message = blob_detection(header=msg_header,
-                                              color=ColorRGBA(r=self.image[c[1], c[0], 2], g=self.image[c[1], c[0], 1] , b=self.image[c[1], c[0], 0], a=1.0),
-                                              size=Float64(data=self.find_area(contour)),
-                                              location=pos)
-                self.info_pub.publish(blob_message)
+                color = ""
+                r = self.image[c[1], c[0], 2]
+                g = self.image[c[1], c[0], 1]
+                b = self.image[c[1], c[0], 0]
+                #if 
+                #blob_message = blob_detection(header=msg_header,
+                                              #color=color,
+                                              #height=,
+                                              #location=pos)
+                #self.info_pub.publish(blob_message)
                 if self.is_tuning:
                     cv2.drawContours(self.image, [box], 0, (255, 0, 0), 5)
                     cv2.circle(self.image, self.find_center(contour), 8, (255, 0, 0), thickness=5)

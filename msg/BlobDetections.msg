@@ -1,4 +1,4 @@
 Header header
 string color
-float32 width
+float32 height
 geometry_msgs/Point location
