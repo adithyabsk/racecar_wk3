@@ -23,7 +23,7 @@ class ObjectDetector:
                 count_far = 0
             else:
                 count_far += 1
-                if count_far == 30 and count_object:
+                if count_far == 15 and count_object:
                     avg_r = running_sum / count_object
                     #width = count_close / 1080 * 3/2 * math.pi * avg_r  # arc length
                     #if width > .005:  # if width of object larger than 1 cm
