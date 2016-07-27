@@ -16,7 +16,7 @@ the advanced computations required by the RACECAR
 import rospy
 import math
 
-from particleCommander import ParticleCommander
+from commander import ParticleCommander
 
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
