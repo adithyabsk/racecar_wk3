@@ -47,9 +47,9 @@ class Commander:
         self.WALL_DDES = 0.4
         self.wall_right = False  # which wall to follow
 
-        self.OBJ_KP = 1
-        self.OBJ_KI = .5
-        self.OBJ_KD = .1
+        self.OBJ_KP = 3
+        self.OBJ_KI = 0
+        self.OBJ_KD = 0
         self.obj_prev_error = 0
         self.obj_prev_time = time.clock()
 
@@ -76,7 +76,7 @@ class Commander:
             thresh_dist = objs[2]
         else:
             thresh_dist = objs[len(objs)-1]
-        close_objs = [i for i in range(len(msg.dists)) if abs(msg.dists[i]-thresh_dist) < 1]  # consider objects that are 1 meter within closest object
+        close_objs = [i for i in range(len(msg.dists)) if msg.dists[i]-thresh_dist < 1]  # consider objects that are 1 meter within closest object
         max_space = -1
         max_center = None
         for s in range(len(close_objs)-1):

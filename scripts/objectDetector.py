@@ -30,7 +30,7 @@ class ObjectDetector:
                     #width = count_close / 1080 * 3/2 * math.pi * avg_r  # arc length
                     #if width > .005:  # if width of object larger than 1 cm
                     if count_object > 15:  # detected an actual object
-                        lefts.append((i-count_far-count_object) / 4)
+			lefts.append((i-count_far-count_object) / 4)
                         rights.append((i-count_far) / 4)
                         dists.append(min_object)
                     running_sum = 0
@@ -48,6 +48,9 @@ class ObjectDetector:
             detections.lefts = lefts  # in degrees
             detections.rights = rights  # in degrees
             detections.dists = dists
+	    print "Lefts: {}".format(lefts)
+	    print "Rights: {}".format(rights)
+	    print "Dists: {}\n".format(dists)
             self.object_pub.publish(detections)
 
 
