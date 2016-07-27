@@ -29,10 +29,9 @@ from ackermann_msgs.msg import AckermannDriveStamped
 class potentialCommander:
 
     def __init__(self):
-        self.DrivePub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
+        self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
         # Add any other topic variables here
 
-        self.speed = 0
         # Add any other class variables here
     
 
@@ -123,7 +122,7 @@ class potentialCommander:
         finalTheta = 0
         finalR = 0
 
-        K = 20
+        K = 2
 
         # Convert msg ranges into proportional r values
         for item in msg.ranges:
@@ -155,7 +154,7 @@ class potentialCommander:
 
 
         # Add gigantic forwards x vector
-        xValues.append(100)
+        xValues.append(1)
         yValues.append(0)
         
             

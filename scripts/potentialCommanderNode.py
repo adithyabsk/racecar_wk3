@@ -19,7 +19,7 @@ from ackermann_msgs.msg import AckermannDriveStamped
 
 # VARIABLES
 
-LASER_TOPIC = "/racecar/laser/scan"
+LASER_TOPIC = "/scan"
 #OBJECT_TOPIC = "/objects"
 #BLOB_TOPIC = "/blobs"
 #MAP_TOPIC = "/map"

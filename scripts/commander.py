@@ -30,10 +30,10 @@ from racecar_wk3.msg import ObjectDetections
 class Commander:
 
     def __init__(self):
-        self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
+        self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=0)
         # Add any other topic variables here
 
-        self.SPEED = 0.5
+        self.SPEED = 2
         # Add any other class constants here
 
         self.prev_error = 0
@@ -47,8 +47,8 @@ class Commander:
         self.WALL_DDES = 0.4
         self.wall_right = False  # which wall to follow
 
-        self.OBJ_KP = 3
-        self.OBJ_KI = 0
+        self.OBJ_KP = .01
+        self.OBJ_KI = .00
         self.OBJ_KD = 0
         self.obj_prev_error = 0
         self.obj_prev_time = time.clock()
@@ -70,13 +70,19 @@ class Commander:
         self.DrivePub.publish(msg)              # Publishes the message
 
     def evade_objects(self, msg):
-        objs = [d[1] for d in enumerate(msg.dists)]  # dists in order of distance
+        #msg.dists += (.01,)  # fake left wall
+        #msg.lefts += (140,)
+        #msg.rights += (270,)
+        objs = [d for d in msg.dists if d < 3]  # dists in order of distance
         objs.sort()
-	if len(objs) > 2:
-            thresh_dist = objs[2]
-        else:
+	if len(objs) >= 2:
+            thresh_dist = objs[1]
+        elif objs:
             thresh_dist = objs[len(objs)-1]
-        close_objs = [i for i in range(len(msg.dists)) if msg.dists[i]-thresh_dist < 1]  # consider objects that are 1 meter within closest object
+        else:
+            self.drive(0)
+            return
+        close_objs = [i for i in range(len(msg.dists)) if msg.dists[i]-thresh_dist < .2]  # consider objects that are 1 meter within closest object
         max_space = -1
         max_center = None
         for s in range(len(close_objs)-1):
@@ -88,12 +94,12 @@ class Commander:
             rospy.loginfo("no space, we're doomed")
         else:
             error = max_center - 135
-            if abs(error) > 2: 
+            if abs(error) > 3: 
                 # PUBLISH DRIVE COMMAND
                 self.drive(self.calc_pid(self.OBJ_KP, self.OBJ_KD, self.OBJ_KI, error, self.obj_prev_error, self.obj_prev_time))    # Execute drive function
             else:
                 self.drive(0)
-        self.obj_prev_error = error
+            self.obj_prev_error = error
         self.obj_prev_time = time.clock()
 
 
