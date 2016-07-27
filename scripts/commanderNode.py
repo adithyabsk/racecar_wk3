@@ -16,19 +16,19 @@ the advanced computations required by the RACECAR
 import rospy
 import math
 
-from commander import commander
+from particleCommander import ParticleCommander
 
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
 
 from racecar_wk3.msg import BlobDetections
-from racecar_wk3.msg import ObjectDetections
+#from racecar_wk3.msg import ObjectDetections
 
 
 
 # VARIABLES
 
-OBJECT_TOPIC = "/objects"
+OBJECT_TOPIC = "/scan"
 #BLOB_TOPIC = "/blobs"
 #MAP_TOPIC = "/map"
 
@@ -36,13 +36,13 @@ NODE_NAME = 'commander'
 
 #D_DESIRED = 0.8
 
-cody = Commander()
+commander = ParticleCommander()
 
 # MAIN()      
 
 rospy.init_node(NODE_NAME)
 
-object_sub = rospy.Subscriber(OBJECT_TOPIC, ObjectDetections, cody.wall_follow)
+object_sub = rospy.Subscriber(OBJECT_TOPIC, LaserScan, commander.wall_follow)
 #blob_msg = rospy.Subscriber(BLOB_TOPIC, BlobDetections, callBack)
 #map_msg = rospy.Subscriber(MAP_TOPIC, MapDetections, callBack)
 
