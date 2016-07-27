@@ -25,15 +25,15 @@ from commander import Commander
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
 
-#from racecar_wk3.msg import BlobDetections
-#from racecar_wk3.msg import ObjectDetections
+from racecar_wk3.msg import BlobDetections
+from racecar_wk3.msg import ObjectDetections
 
 
 
 # VARIABLES
 
-#OBJECT_TOPIC = "/scan"
-OBJECT_TOPIC = "/racecar/laser/scan"
+OBJECT_TOPIC = "/scan"
+#OBJECT_TOPIC = "/racecar/laser/scan"
 #BLOB_TOPIC = "/blobs"
 #MAP_TOPIC = "/map"
 

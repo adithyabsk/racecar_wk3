@@ -22,8 +22,8 @@ import numpy as np
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
 
-from racecar_wk3.msg import BlobDetections
-from racecar_wk3.msg import ObjectDetections
+#from racecar_wk3.msg import BlobDetections
+#from racecar_wk3.msg import ObjectDetections
 
 
 # CLASS DECLARATION
@@ -31,19 +31,19 @@ from racecar_wk3.msg import ObjectDetections
 class ParticleCommander:
 
     def __init__(self):
-        self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
-        #self.DrivePub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) #gazebo pulisher
+        #self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
+        self.DrivePub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) #gazebo pulisher
         # Add any other topic variales here
 
         #self.SPEED = 0.5
 
         # Add any other class constants here
 
-        self.PUSH_VECTOR = np.array([0, 1])
+        self.PUSH_VECTOR = np.array([0, 10])
         self.FORCE_CONSTANT = 0.1 # the numerator in the F = (kQq)/r^2
         self.HOKUYO_ANGLES = np.arange(-45,225,0.25) #change back to np.arange(-45,225.25,0.25)
         self.p_dir = 1.0
-        self.p_mag = 0.03
+        self.p_mag = 1.0
         #print len(self.HOKUYO_ANGLES)
         # Add any other class variables here
 

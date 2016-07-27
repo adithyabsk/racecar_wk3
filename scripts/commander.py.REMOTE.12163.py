@@ -41,7 +41,7 @@ class ParticleCommander:
 
         self.PUSH_VECTOR = np.array([0, 1])
         self.FORCE_CONSTANT = 0.1 # the numerator in the F = (kQq)/r^2
-        self.HOKUYO_ANGLES = np.arange(-45,225,0.25) #change back to np.arange(-45,225.25,0.25)
+        self.HOKUYO_ANGLES = np.arange(-45,225.25,0.25) #change back to np.arange(-45,225.25,0.25)
         self.p_dir = 1.0
         self.p_mag = 0.03
         #print len(self.HOKUYO_ANGLES)
