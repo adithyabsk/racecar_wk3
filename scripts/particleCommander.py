@@ -39,8 +39,8 @@ class ParticleCommander:
 
         # Add any other class constants here
 
-        self.PUSH_VECTOR = np.array([500, 500])
-        self.FORCE_CONSTANT = 1. # the numerator in the F = (kQq)/r^2
+        self.PUSH_VECTOR = np.array([0, 100])
+        self.FORCE_CONSTANT = 20 # the numerator in the F = (kQq)/r^2
         self.HOKUYO_ANGLES = np.arange(-45,225,0.25) #change back to np.arange(-45,225.25,0.25)
         #print len(self.HOKUYO_ANGLES)
         # Add any other class variables here
@@ -54,10 +54,10 @@ class ParticleCommander:
     def drive(self, direction, magnitude):
         msg = AckermannDriveStamped()           # Initializes msg variable
         msg.drive.speed = magnitude             # Sets msg speed to entered speed
-        msg.drive.acceleration = 1              # Sets msg acceleration to 0
-        msg.drive.jerk = 1                      # Sets msg jerk to 1
+        #msg.drive.acceleration = 1              # Sets msg acceleration to 0
+        #msg.drive.jerk = 1                      # Sets msg jerk to 1
         msg.drive.steering_angle = direction    # Sets msg steering angle to entered angle
-        msg.drive.steering_angle_velocity = 1   # Sets msg angle velocity to 1
+        #msg.drive.steering_angle_velocity = 1   # Sets msg angle velocity to 1
         self.DrivePub.publish(msg)              # Publishes the message
         
     def avoidObjects(self, msg):
@@ -76,8 +76,10 @@ class ParticleCommander:
 
         #Convert rectangular to polar
         direction = np.arctan(rsltFVec[1]/rsltFVec[0])
+        print direction
         magnitude = np.sqrt(rsltFVec[0]**2+rsltFVec[1]**2)
-
+        print magnitude
+        
         self.drive(direction, magnitude)
 
     
