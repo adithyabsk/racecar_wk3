@@ -2,4 +2,9 @@
     <node name="safety" type="safety.py" pkg="racecar_wk3" />
     <node name="object_detector" type="objectDetector.py" pkg="racecar_wk3" />
     <node name="blob_detector" type="blobDetector.py" pkg="racecar_wk3" />
+    <node name="commander" type="CommanderNode.py" pkg="racecar_wk3" />
+    <!--
+    <include file="$(find zed_wrapper)/launch/zed.launch"/>
+    -->
+    <include file="$(find racecar)/launch/teleop.launch"/>
 </launch>
