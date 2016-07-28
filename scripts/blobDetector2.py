@@ -90,7 +90,7 @@ class BlobDetector:
                 cv2.drawContours(im, approx_contours, -1, (100, 255, 100), 2)
                 cv2.imwrite("/home/racecar/challenge_photos/{}{}.png".format(label_color, int(time.clock()*1000)), im)
             print "wrote photo"
-            rospy.sleep(2)
+            rospy.sleep(1)
 
     def find_faces(self, passed_im):
         im = passed_im.copy()
@@ -101,7 +101,7 @@ class BlobDetector:
             roi_gray = gray[y:y+h, x:x+w]
             roi_color = im[y:y+h, x:x+w]
             eyes = self.eye_cascade.detectMultiScale(roi_gray)
-            if not eyes: continue
+            if len(eyes) == 0: continue
             found_face = True
             cv2.rectangle(im, (x, y), (x+w, y+h), (100, 255, 100), 2)
             eh = eyes[0][3]

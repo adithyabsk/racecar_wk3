@@ -36,8 +36,9 @@ class potentialCommander:
         self.FORCE_CONSTANT = 0.1                           # equal to kQq in Coloumb's Law
         self.HOKUYO_ANGLES = np.arange(-45, 225.25, .25)      # creates a np array from -45 to 225 in 0.25 segments
 
-        self.K_speed = 1.0
-        self.K_angle = 0.1
+        self.K_speed = 0.1
+        self.K_angle = 1
+        self.PUSH_VECTOR = 5
         
         
         # Add any other class variables here
@@ -53,10 +54,7 @@ class potentialCommander:
     def publish(self, speed, angle):
         msg = AckermannDriveStamped()           # Initializes msg variable
         msg.drive.speed = speed                 # Sets msg speed to entered speed
-        msg.drive.acceleration = 0              # Sets msg acceleration to 0
-        msg.drive.jerk = 1                      # Sets msg jerk to 1
         msg.drive.steering_angle = angle        # Sets msg steering angle to entered angle
-        msg.drive.steering_angle_velocity = 1   # Sets msg angle velocity to 1
         self.DrivePub.publish(msg)              # Publishes the message
 
 
@@ -119,10 +117,10 @@ class potentialCommander:
         yComponents = np.multiply(magnitudes, np.sin(np.deg2rad(self.HOKUYO_ANGLES)))   # creates array of y components
 
         netX = np.sum(xComponents)      # creates a net x scalar
-        netY = np.sum(yComponents)      # creates a net y scalar
+        netY = np.sum(yComponents) + self.PUSH_VECTOR      # creates a net y scalar
 
         speed = self.K_speed * math.sqrt(netX * netX + netY * netY)*np.sign(netY)    
-        direction = self.K_angle * math.atan2(netX / netY)*np.sign(netY)
+        direction = self.K_angle * math.atan2(netX, netY)*np.sign(netY)
 
         self.publish(speed, direction)
         
