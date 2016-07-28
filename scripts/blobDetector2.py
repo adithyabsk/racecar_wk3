@@ -34,19 +34,19 @@ class BlobDetector:
 	hsv = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)
         self.msg = BlobDetections()
         self.find_color(im, "red", cv2.bitwise_or(cv2.inRange(hsv, np.array([0, 110, 180]), np.array([15, 255, 255])), cv2.inRange(hsv, np.array([175, 110, 180]), np.array([180, 255, 255]))))  # red
-        self.find_color(im, "green", cv2.inRange(hsv, np.array([40, 55, 140]), np.array([85, 185, 250])))  # green
-        self.find_color(im, "yellow", cv2.inRange(hsv, np.array([20, 55, 140]), np.array([35, 185, 250])))  # yellow
-        self.find_color(im, "blue", cv2.inRange(hsv, np.array([110, 55, 140]), np.array([130, 185, 250])))  # blue
+        self.find_color(im, "green", cv2.inRange(hsv, np.array([40, 55, 110]), np.array([85, 220, 250])))  # green
+        self.find_color(im, "yellow", cv2.inRange(hsv, np.array([15, 150, 150]), np.array([35, 255, 240])))  # yellow
+        self.find_color(im, "blue", cv2.inRange(hsv, np.array([90, 85, 90]), np.array([140, 185, 210])))  # blue
         self.pub_image.publish(self.msg)
         self.thread_lock.release()
 
     def find_color(self, passed_im, label_color, mask):
-        im = passed_im[:]
+        im = passed_im.copy()
         contours = cv2.findContours(mask, cv2.cv.CV_RETR_TREE, cv2.cv.CV_CHAIN_APPROX_SIMPLE)[0]
         approx_contours = []
         for c in contours:
 	    area = cv2.contourArea(c)
-            if area < 100: continue
+            if area < 500: continue
             perim = cv2.arcLength(c, True)
             approx = cv2.approxPolyDP(c, .05*perim, True)
             if len(approx) == 4:
