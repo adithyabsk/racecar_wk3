@@ -34,7 +34,7 @@ class potentialCommander:
         # Add any other topic variables here
 
         self.FORCE_CONSTANT = 0.1                           # equal to kQq in Coloumb's Law
-        self.HOKUYO_ANGLES = np.arange(-45, 225, 0.25)      # creates a np array from -45 to 225 in 0.25 segments
+        self.HOKUYO_ANGLES = np.arange(-45, 225.25, .25)      # creates a np array from -45 to 225 in 0.25 segments
 
         self.K_speed = 1.0
         self.K_angle = 0.1
@@ -121,8 +121,8 @@ class potentialCommander:
         netX = np.sum(xComponents)      # creates a net x scalar
         netY = np.sum(yComponents)      # creates a net y scalar
 
-        speed = K_speed * math.sqrt(netX * netX + netY * netY)*np.sign(netY)    
-        direction = K_angle * math.atan2(netX / netY)*np.sign(netY)
+        speed = self.K_speed * math.sqrt(netX * netX + netY * netY)*np.sign(netY)    
+        direction = self.K_angle * math.atan2(netX / netY)*np.sign(netY)
 
         self.publish(speed, direction)
         
