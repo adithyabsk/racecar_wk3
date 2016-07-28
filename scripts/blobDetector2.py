@@ -40,7 +40,8 @@ class BlobDetector:
         self.pub_image.publish(self.msg)
         self.thread_lock.release()
 
-    def find_color(self, im, label_color, mask):
+    def find_color(self, passed_im, label_color, mask):
+        im = passed_im[:]
         contours = cv2.findContours(mask, cv2.cv.CV_RETR_TREE, cv2.cv.CV_CHAIN_APPROX_SIMPLE)[0]
         approx_contours = []
         for c in contours:
@@ -65,8 +66,9 @@ class BlobDetector:
                 self.msg.locations.append(msg_loc)
         if approx_contours:
             cv2.drawContours(im, approx_contours, -1, (100, 255, 100), 2)
-            cv2.imwrite("/home/racecar/challenge_photos/{}.png".format(int(time.clock()*1000)), im)
+            cv2.imwrite("/home/racecar/challenge_photos/{}{}.png".format(label_color, int(time.clock()*1000)), im)
             print "wrote photo"
+            rospy.sleep(2)
 
 
 if __name__ == "__main__":
