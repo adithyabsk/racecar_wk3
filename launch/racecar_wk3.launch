@@ -1,5 +1,6 @@
 <launch>
     <node name="safety" type="safety.py" pkg="racecar_wk3" />
     <node name="object_detector" type="objectDetector.py" pkg="racecar_wk3" />
-    <node name="commander" type="commanderNode.py" pkg="racecar_wk3" />
+    <node name="blob_detector" type="blobDetector2.py" pkg="racecar_wk3" />
+    <node name="commander" type="potentCommanderNode.py" pkg="racecar_wk3" />
 </launch>

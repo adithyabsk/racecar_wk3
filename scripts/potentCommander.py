@@ -59,12 +59,13 @@ class Commander:
         vect_x = vect_y = 0
         for i in range(0, 1081, 2):
             r_sq = msg.ranges[i]**2
-            vect_x -= .1 / r_sq * math.cos(math.radians((i-135*4) / 4))
-            vect_y -= .1 / r_sq * math.sin(math.radians((i-135*4) / 4))
-        vect_x += 30
-        driving.drive.speed = math.sqrt(vect_x**2 + vect_y**2) * np.sign(vect_x)
+            vect_x -= .08 / r_sq * math.cos(math.radians((i-135*4) / 4))
+            vect_y -= .08 / r_sq * math.sin(math.radians((i-135*4) / 4))
+        vect_x += 5
+        driving.drive.speed = .3 * math.sqrt(vect_x**2 + vect_y**2) * np.sign(vect_x)
         driving.drive.steering_angle = math.atan2(vect_y, vect_x) * np.sign(vect_x)
         self.DrivePub.publish(driving)
+        print "{}{}".format(driving.drive.speed, driving.drive.steering_angle)
 
 
     # Function: drive
