@@ -34,6 +34,8 @@ class BlobDetector:
         self.msg = BlobDetections()
         self.find_color(im, "red", cv2.bitwise_or(cv2.inRange(hsv, np.array([0, 110, 180]), np.array([15, 255, 255])), cv2.inRange(hsv, np.array([175, 110, 180]), np.array([180, 255, 255]))))  # red
         self.find_color(im, "green", cv2.inRange(hsv, np.array([40, 55, 140]), np.array([85, 185, 250])))  # green
+        self.find_color(im, "yellow", cv2.inRange(hsv, np.array([20, 55, 140]), np.array(35, 185, 250])))  # yellow
+        self.find_color(im, "blue", cv2.inRange(hsv, np.array([110, 55, 140]), np.array(130, 185, 250])))  # blue
         self.pub_image.publish(self.msg)
         self.thread_lock.release()
 
