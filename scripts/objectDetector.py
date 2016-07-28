@@ -9,7 +9,6 @@ import math
 class ObjectDetector:
     def __init__(self):
         self.object_pub = rospy.Publisher("objects", ObjectDetections, queue_size=0)
-        
         #self.scan_sub = rospy.Subscriber("scan", LaserScan, self.scan_cb)
         self.scan_sub = rospy.Subscriber("/racecar/laser/scan", LaserScan, self.scan_cb) #gazebo
     

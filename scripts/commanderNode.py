@@ -21,8 +21,8 @@ from commander import Commander
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
 
-#from racecar_wk3.msg import BlobDetections
-#from racecar_wk3.msg import ObjectDetections
+from racecar_wk3.msg import BlobDetections
+from racecar_wk3.msg import ObjectDetections
 
 
 
@@ -35,22 +35,17 @@ OBJECT_TOPIC = "/racecar/laser/scan"
 
 NODE_NAME = 'commander'
 
-#D_DESIRED = 0.8
-
 commander = Commander()
 
-def callback(msg):
-    cody.evade_objects(msg)
+#def callback(msg):
+    #cody.evade_objects(msg)
 
 # MAIN()      
-
 rospy.init_node(NODE_NAME)
 
 object_sub = rospy.Subscriber(OBJECT_TOPIC, LaserScan, commander.avoidObjects)
 #object_sub = rospy.Subscriber(OBJECT_TOPIC, ObjectDetections, callback)
 #blob_msg = rospy.Subscriber(BLOB_TOPIC, BlobDetections, callBack)
 #map_msg = rospy.Subscriber(MAP_TOPIC, MapDetections, callBack)
-
-#sideEntry = rospy.Subscriber("", ,)
 
 rospy.spin()
