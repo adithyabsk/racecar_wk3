@@ -13,7 +13,6 @@ directly to the /navigation topic.
 
 
 # IMPORTS
-
 import rospy
 import math
 import time
@@ -22,17 +21,13 @@ import numpy as np
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
 
-from racecar_wk3.msg import BlobDetections
-from racecar_wk3.msg import ObjectDetections
-
-
 # CLASS DECLARATION
 
-class ParticleCommander:
+class Commander:
 
     def __init__(self):
-        self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
-        #self.DrivePub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) #gazebo pulisher
+        #self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
+        self.DrivePub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) #gazebo pulisher
         # Add any other topic variales here
 
         #self.SPEED = 0.5

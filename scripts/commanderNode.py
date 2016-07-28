@@ -16,24 +16,20 @@ the advanced computations required by the RACECAR
 import rospy
 import math
 
-<<<<<<< HEAD
-from commander import ParticleCommander
-=======
 from commander import Commander
->>>>>>> c5376eaed2002d0f88e8f4fbbbaf4096089c29eb
 
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
 
-from racecar_wk3.msg import BlobDetections
-from racecar_wk3.msg import ObjectDetections
+#from racecar_wk3.msg import BlobDetections
+#from racecar_wk3.msg import ObjectDetections
 
 
 
 # VARIABLES
 
-OBJECT_TOPIC = "/scan"
-#OBJECT_TOPIC = "/racecar/laser/scan"
+#OBJECT_TOPIC = "/scan"
+OBJECT_TOPIC = "/racecar/laser/scan"
 #BLOB_TOPIC = "/blobs"
 #MAP_TOPIC = "/map"
 
@@ -41,7 +37,7 @@ NODE_NAME = 'commander'
 
 #D_DESIRED = 0.8
 
-commander = ParticleCommander()
+commander = Commander()
 
 def callback(msg):
     cody.evade_objects(msg)
@@ -50,11 +46,8 @@ def callback(msg):
 
 rospy.init_node(NODE_NAME)
 
-<<<<<<< HEAD
 object_sub = rospy.Subscriber(OBJECT_TOPIC, LaserScan, commander.avoidObjects)
-=======
-object_sub = rospy.Subscriber(OBJECT_TOPIC, ObjectDetections, callback)
->>>>>>> c5376eaed2002d0f88e8f4fbbbaf4096089c29eb
+#object_sub = rospy.Subscriber(OBJECT_TOPIC, ObjectDetections, callback)
 #blob_msg = rospy.Subscriber(BLOB_TOPIC, BlobDetections, callBack)
 #map_msg = rospy.Subscriber(MAP_TOPIC, MapDetections, callBack)
 
