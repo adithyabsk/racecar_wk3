@@ -7,7 +7,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import threading
 from racecar_wk3.msg import BlobDetections
-from std_msgs.msg import ColorRGBA, Float64
+from std_msgs.msg import String
 from geometry_msgs.msg import Point
 import math
 import time
@@ -17,7 +17,8 @@ class BlobDetector:
     def __init__(self):
         self.thread_lock = threading.Lock()
         self.sub_image = rospy.Subscriber("/camera/rgb/image_rect_color", Image, self.cbImage, queue_size=1)
-        self.pub_image = rospy.Publisher("blobs", BlobDetections, queue_size=1)
+        #self.pub_image = rospy.Publisher("blobs", BlobDetections, queue_size=1)
+        self.pub_blobs = rospy.Publisher("/exploring_challenge", String, queue_size=1)
         self.bridge = CvBridge()
 
         rospy.loginfo("BlobDetector initialized.")
@@ -37,7 +38,7 @@ class BlobDetector:
         self.find_color(im, "green", cv2.inRange(hsv, np.array([40, 55, 110]), np.array([85, 220, 250])))  # green
         self.find_color(im, "yellow", cv2.inRange(hsv, np.array([15, 150, 150]), np.array([35, 255, 240])))  # yellow
         self.find_color(im, "blue", cv2.inRange(hsv, np.array([90, 85, 90]), np.array([140, 185, 210])))  # blue
-        self.pub_image.publish(self.msg)
+        #self.pub_image.publish(self.msg)
         self.thread_lock.release()
 
     def find_color(self, passed_im, label_color, mask):
@@ -51,6 +52,7 @@ class BlobDetector:
             approx = cv2.approxPolyDP(c, .05*perim, True)
             if len(approx) == 4:
                 approx_contours.append(approx)
+                self.pub_blobs.publish(label_color)
                 moments = cv2.moments(c)
                 center = (int(moments['m10']/moments['m00']), int(moments['m01']/moments['m00']))
                 cv2.putText(im, label_color, center, cv2.FONT_HERSHEY_PLAIN, 2, (100, 255, 100))
