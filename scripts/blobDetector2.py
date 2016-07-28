@@ -89,16 +89,16 @@ class BlobDetector:
             if not eyes: continue
             found_face = True
             cv2.rectangle(im, (x, y), (x+w, y+h), (100, 255, 100), 2)
-            ey = eyes[0][1]
-            if ey == 0: continue
-            print "face height: {},  eye height: {}".format(y, ey)
-            if abs(y/ey - 7.3) < 3:
+            eh = eyes[0][3]
+            if eh == 0: continue
+            print "face height: {},  eye height: {}".format(h, eh)
+            if abs(h/eh - 1.5) < 1.5:
                 print "detected karaman"
                 cv2.imwrite("/home/racecar/challenge_photos/karaman{}.png".format(int(time.clock()*1000)), im)
                 blob_msg = String()
                 blob_msg.data = "professor karaman"
                 self.pub_blobs.publish(blob_msg)
-            elif abs(y/ey - 3.3) < 3:
+            elif abs(h/eh - 6) < 3:
                 print "detected ari"
                 cv2.imwrite("/home/racecar/challenge_photos/ari{}.png".format(int(time.clock()*1000)), im)
                 blob_msg = String()
