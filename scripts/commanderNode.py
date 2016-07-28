@@ -28,8 +28,8 @@ from racecar_wk3.msg import ObjectDetections
 
 # VARIABLES
 
-#OBJECT_TOPIC = "/scan"
-OBJECT_TOPIC = "/racecar/laser/scan"
+OBJECT_TOPIC = "/scan"
+#OBJECT_TOPIC = "/racecar/laser/scan"
 #BLOB_TOPIC = "/blobs"
 #MAP_TOPIC = "/map"
 

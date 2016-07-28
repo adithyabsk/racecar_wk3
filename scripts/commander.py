@@ -25,8 +25,8 @@ from ackermann_msgs.msg import AckermannDriveStamped
 class Commander:
 
     def __init__(self):
-        #self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
-        self.DrivePub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) # The Gazebo Pulisher
+        self.DrivePub = rospy.Publisher('/vesc/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10)
+        #self.DrivePub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) # The Gazebo Pulisher
 
         # CLASS CONSTANTS
         self.PUSH_VECTOR = np.array([0, 1])                                                # The push vector (negative charge) behind the car

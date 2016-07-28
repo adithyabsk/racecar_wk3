@@ -7,9 +7,9 @@ from racecar_wk3.msg import ObjectDetections
 
 class SafetyController:
     def __init__(self):
-        #self.safety_pub = rospy.Publisher("vesc/ackermann_cmd_mux/input/safety", AckermannDriveStamped, queue_size=0)
-        self.safety_pub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) #gazebo pulisher
-        self.objects_sub = rospy.Subscriber("objects", ObjectDetections, self.objects_cb)
+        self.safety_pub = rospy.Publisher("vesc/ackermann_cmd_mux/input/safety", AckermannDriveStamped, queue_size=0)
+        #self.safety_pub = rospy.Publisher('/racecar/ackermann_cmd_mux/input/navigation', AckermannDriveStamped,queue_size=10) #gazebo pulisher
+        self.objects_sub = rospy.Subscriber("/objects", ObjectDetections, self.objects_cb)
 
     def objects_cb(self, msg):
         self.objects_sub.unregister()
