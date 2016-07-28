@@ -5,7 +5,7 @@ import cv2
 import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
-import threading
+#import threading
 #from racecar_wk3.msg import BlobDetections
 from std_msgs.msg import String
 #from geometry_msgs.msg import Point
@@ -15,23 +15,23 @@ import time
 
 class BlobDetector:
     def __init__(self):
-        self.thread_lock = threading.Lock()
+        #self.thread_lock = threading.Lock()
         self.eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')  
         self.bridge = CvBridge()
         self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
         self.pub_blobs = rospy.Publisher("/exploring_challenge", String, queue_size=1)
-        self.sub_image = rospy.Subscriber("/camera/rgb/image_rect_color", Image, self.cbImage, queue_size=1)
+        self.sub_image = rospy.Subscriber("/camera/rgb/image_rect_color", Image, self.processImage, queue_size=1)
         #self.pub_image = rospy.Publisher("blobs", BlobDetections, queue_size=1)
 
         rospy.loginfo("BlobDetector initialized.")
 
-    def cbImage(self, image_msg):
-        thread = threading.Thread(target=self.processImage, args=(image_msg,))
-        thread.setDaemon(True)
-        thread.start()
+    #def cbImage(self, image_msg):
+        #thread = threading.Thread(target=self.processImage, args=(image_msg,))
+        #thread.setDaemon(True)
+        #thread.start()
 
     def processImage(self, image_msg):
-        if not self.thread_lock.acquire(False): return
+        #if not self.thread_lock.acquire(False): return
         im = self.bridge.imgmsg_to_cv2(image_msg)
         im = im[len(im)*.4:]
 	hsv = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)
@@ -42,7 +42,7 @@ class BlobDetector:
         self.find_color(im, "blue", cv2.inRange(hsv, np.array([90, 85, 90]), np.array([140, 185, 210])))  # blue
         self.find_faces(im)  # faces
         #self.pub_image.publish(self.msg)
-        self.thread_lock.release()
+        #self.thread_lock.release()
 
     def find_color(self, passed_im, label_color, mask):
         im = passed_im.copy()
