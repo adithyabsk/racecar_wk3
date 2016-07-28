@@ -6,10 +6,11 @@ import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import threading
-from red_light_green_light.msg import BlobDetections
+from racecar_wk3.msg import BlobDetections
 from std_msgs.msg import ColorRGBA, Float64
 from geometry_msgs.msg import Point
 import math
+import time
 
 
 class BlobDetector:
@@ -51,8 +52,8 @@ class BlobDetector:
                 approx_contours.append(approx)
                 moments = cv2.moments(c)
                 center = (int(moments['m10']/moments['m00']), int(moments['m01']/moments['m00']))
-                cv2.putText(im, label_color, center, cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 100, 100))
-                cv2.circle(im, center, 3, (255, 100, 100), 4)
+                cv2.putText(im, label_color, center, cv2.FONT_HERSHEY_PLAIN, 2, (100, 255, 100))
+                #cv2.circle(im, center, 3, (255, 100, 100), 4)
                 print "Moment:  ({}, {})".format(center[0], center[1])
 
                 self.msg.colors.append(label_color)
@@ -62,7 +63,10 @@ class BlobDetector:
                 msg_loc = Point()
                 msg_loc.x, msg_loc.y = float(center[0]) / len(im[0]), float(center[1]) / len(im)
                 self.msg.locations.append(msg_loc)
-        cv2.drawContours(im, approx_contours, -1, (100, 255, 100), 2)
+        if approx_contours:
+            cv2.drawContours(im, approx_contours, -1, (100, 255, 100), 2)
+            cv2.imwrite("/home/racecar/challenge_photos/{}.png".format(int(time.clock()*1000)), im)
+            print "wrote photo"
 
 
 if __name__ == "__main__":
