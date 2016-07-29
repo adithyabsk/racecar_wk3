@@ -23,6 +23,7 @@ class PotentialField:
     def __init__(self):
         # initialize potential field variables
         self.charge_laser_particle = 0.07
+        #self.charge_laser_particle = 0.04
         self.charge_forward_boost = 25.0
         self.boost_distance = 0.5
         self.p_speed = 0.007
@@ -68,6 +69,10 @@ class PotentialField:
         # Now, create a steering command to send to the vesc.
         command_msg = AckermannDriveStamped()
         command_msg.drive.steering_angle = (self.p_steering * np.sign(total_x_component) * math.atan2(total_y_component, total_x_component))
+        
+       # r = rospy.Rate(3)
+       # for i in range(3):
+        
         command_msg.drive.speed = (self.p_speed * np.sign(total_x_component) * math.sqrt(total_x_component**2 + total_y_component**2))
 
         # Publish the command
