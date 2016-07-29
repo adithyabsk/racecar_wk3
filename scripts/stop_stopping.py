@@ -6,8 +6,8 @@ from ackermann_msgs.msg import AckermannDriveStamped
 
 class StopStopper:
     def __init__(self):
-        self.pub = rospy.Publisher("/vesc/ackermann_cmd_mux/input/safety", AckermannDriveStamped, queue_size=0)
-        self.sub = rospy.Subscriber("/vesc/ackermann_cmd_mux/input/navigation", AckermannDriveStamped, self.stop_stopping, queue_size=0)
+        self.pub = rospy.Publisher("/vesc/ackermann_cmd_mux/input/safety", AckermannDriveStamped, queue_size=1)
+        self.sub = rospy.Subscriber("/vesc/ackermann_cmd_mux/input/navigation", AckermannDriveStamped, self.stop_stopping, queue_size=1)
         self.stop_start = rospy.get_time()
 
     def stop_stopping(self, msg):
