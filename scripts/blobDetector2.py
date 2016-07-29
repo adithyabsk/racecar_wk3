@@ -90,7 +90,6 @@ class BlobDetector:
                 cv2.drawContours(im, approx_contours, -1, (100, 255, 100), 2)
                 cv2.imwrite("/home/racecar/challenge_photos/{}{}.png".format(label_color, int(time.clock()*1000)), im)
             print "wrote photo"
-            rospy.sleep(1)
 
     def find_faces(self, passed_im):
         im = passed_im.copy()
@@ -119,8 +118,6 @@ class BlobDetector:
                 blob_msg = String()
                 blob_msg.data = "ari"
                 self.pub_blobs.publish(blob_msg)
-        if found_face:
-            rospy.sleep(1)
     def window_runner(self):
         cv2.imshow('HSV', cv2.resize(self.image, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA))
         k = cv2.waitKey(1) & 0xFF
