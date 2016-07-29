@@ -25,3 +25,9 @@ class StopStopper:
                     r.sleep()
         else:
             self.stop_start = rospy.get_time()
+
+
+if __name__ == "__main__":
+    rospy.init_node("stop_stopper")
+    ss = StopStopper()
+    rospy.spin()
